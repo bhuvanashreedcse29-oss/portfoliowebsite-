@@ -11,13 +11,21 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
-document.querySelectorAll('.reveal').forEach((section) => {
+document.querySelectorAll('.reveal').forEach((section, index) => {
+  section.style.setProperty('--reveal-delay', `${Math.min(index * 90, 240)}ms`);
   revealObserver.observe(section);
 });
 
 const logoReveal = document.getElementById('logoReveal');
+
+const showLogoReveal = () => {
+  if (!logoReveal) return;
+  logoReveal.classList.add('show');
+};
+
 const hideLogoReveal = () => {
   if (!logoReveal) return;
+  logoReveal.classList.remove('show');
   logoReveal.classList.add('hide');
   setTimeout(() => {
     logoReveal.remove();
@@ -25,6 +33,7 @@ const hideLogoReveal = () => {
 };
 
 window.addEventListener('load', () => {
+  showLogoReveal();
   setTimeout(hideLogoReveal, 2200);
 });
 
